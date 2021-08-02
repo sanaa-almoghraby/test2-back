@@ -7,7 +7,7 @@ require('dotenv').config();
 const PORT =process.env.PORT //3004
 server.use(cors());
 server.use(express.json());
-
+const getApidata =require('./model/GetApidata')
 
 // http://localhost:3004/
 server.get('/', testfun)
@@ -15,9 +15,11 @@ server.get('/', testfun)
 const mongoose = require('mongoose');
 const { default: axios } = require('axios');
 // mongodb://localhost:27017/test2
-// MONGO_URL=mongodb://sanaa:sanaa#123@cluster0-shard-00-00.jn4uh.mongodb.net:27017,cluster0-shard-00-01.jn4uh.mongodb.net:27017,cluster0-shard-00-02.jn4uh.mongodb.net:27017/test2?ssl=true&replicaSet=atlas-ow5lhc-shard-0&authSource=admin&retryWrites=true&w=majority
+//MONGO_URL=mongodb://sanaa:sanaa#123@cluster0-shard-00-00.ejhje.mongodb.net:27017,cluster0-shard-00-01.ejhje.mongodb.net:27017,cluster0-shard-00-02.ejhje.mongodb.net:27017/test2?ssl=true&replicaSet=atlas-10qf27-shard-0&authSource=admin&retryWrites=true&w=majority
+// ----------------------------
+// mongodb://sanaa:<password>@cluster0-shard-00-00.ejhje.mongodb.net:27017,cluster0-shard-00-01.ejhje.mongodb.net:27017,cluster0-shard-00-02.ejhje.mongodb.net:27017/myFirstDatabase?ssl=true&replicaSet=atlas-10qf27-shard-0&authSource=admin&retryWrites=true&w=majority
 
-mongoose.connect('mongodb://localhost:27017/test2', { useNewUrlParser: true, useUnifiedTopology: true });
+mongoose.connect(process.env.MONGO_URL, { useNewUrlParser: true, useUnifiedTopology: true });
 
 const dragonSchema = new mongoose.Schema({
     name: String,
@@ -160,22 +162,22 @@ function addtoFavFun(req, res) {
 
 }
 
-async function getApidata(req, res) {
-    let apiData = await axios.get('https://digimon-api.vercel.app/api/digimon')
+// async function getApidata(req, res) {
+//     let apiData = await axios.get('https://digimon-api.vercel.app/api/digimon')
 
-    let allDAta = apiData.data.map(ele => {
-        return new getdataApi(ele)
-    })
-    res.send(allDAta)
-}
-class getdataApi {
-    constructor(data) {
-        this.name = data.name,
-            this.img = data.img,
-            this.level = data.level
-    }
+//     let allDAta = apiData.data.map(ele => {
+//         return new GetdataApi(ele)
+//     })
+//     res.send(allDAta)
+// }
+// class GetdataApi {
+//     constructor(data) {
+//         this.name = data.name,
+//             this.img = data.img,
+//             this.level = data.level
+//     }
 
-}
+// }
 
 // =============================================================================
 // http://localhost:3004/alldata?email=
