@@ -143,9 +143,10 @@ function updatefun(req, res) {
 }
 
 
-// // http://localhost:3004/
-// server.get('/', testfun)
-// function testfun
+// http://localhost:3004/
+server.get('/',(req,res)=>{
+    res.send('goood')
+})
 
 server.listen(PORT, () => {
     console.log(`listen on ${PORT}`);
